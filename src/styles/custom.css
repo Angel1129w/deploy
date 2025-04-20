@@ -1,0 +1,253 @@
+/* Estilos personalizados para QRTIXPRO */
+
+/* Variables de colores */
+:root {
+  --primary: #4f46e5;
+  --primary-dark: #4338ca;
+  --primary-light: #818cf8;
+  --secondary: #10b981;
+  --secondary-dark: #059669;
+  --accent: #f59e0b;
+  --danger: #ef4444;
+  --success: #10b981;
+  --dark: #1f2937;
+  --light: #f9fafb;
+  --gray: #6b7280;
+  --gray-light: #e5e7eb;
+}
+
+/* Estilos generales */
+body {
+  background-color: #f3f4f6;
+  color: var(--dark);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Clases de animación */
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slideInUp {
+  animation: slideInUp 0.5s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Botones */
+.btn {
+  @apply px-4 py-2 rounded-md font-medium transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-opacity-50;
+}
+
+.btn-primary {
+  @apply bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
+}
+
+.btn-secondary {
+  @apply bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500;
+}
+
+.btn-accent {
+  @apply bg-amber-500 text-white hover:bg-amber-600 focus:ring-amber-400;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+}
+
+.btn-outline {
+  @apply border-2 bg-transparent hover:text-white;
+}
+
+.btn-outline-primary {
+  @apply border-indigo-600 text-indigo-600 hover:bg-indigo-600;
+}
+
+/* Tarjetas */
+.card {
+  @apply bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg;
+}
+
+.card-header {
+  @apply p-4 border-b border-gray-200;
+}
+
+.card-body {
+  @apply p-4;
+}
+
+.card-footer {
+  @apply p-4 border-t border-gray-200;
+}
+
+/* Formularios */
+.form-control {
+  @apply w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.form-group {
+  @apply mb-4;
+}
+
+.form-error {
+  @apply text-red-500 text-sm mt-1;
+}
+
+/* Navbar */
+.navbar {
+  @apply bg-gradient-to-r from-indigo-600 to-indigo-800 text-white shadow-md;
+}
+
+.navbar-link {
+  @apply px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:bg-indigo-700 hover:text-white;
+}
+
+.navbar-brand {
+  @apply text-2xl font-bold text-white;
+}
+
+/* Menú de usuario */
+.user-menu {
+  @apply relative;
+}
+
+.user-menu-dropdown {
+  @apply absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none z-10 transform opacity-0 scale-95 transition-all duration-200 ease-out pointer-events-none;
+}
+
+.user-menu-dropdown.open {
+  @apply transform opacity-100 scale-100 pointer-events-auto;
+}
+
+.user-menu-item {
+  @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left;
+}
+
+/* Alertas */
+.alert {
+  @apply p-4 mb-4 rounded-md border-l-4;
+}
+
+.alert-success {
+  @apply bg-green-50 border-green-500 text-green-700;
+}
+
+.alert-error {
+  @apply bg-red-50 border-red-500 text-red-700;
+}
+
+.alert-warning {
+  @apply bg-yellow-50 border-yellow-500 text-yellow-700;
+}
+
+.alert-info {
+  @apply bg-blue-50 border-blue-500 text-blue-700;
+}
+
+/* Badges */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-primary {
+  @apply bg-indigo-100 text-indigo-800;
+}
+
+.badge-secondary {
+  @apply bg-green-100 text-green-800;
+}
+
+.badge-accent {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+/* Loader */
+.loader {
+  @apply animate-spin rounded-full border-4 border-gray-200 border-t-indigo-600 h-10 w-10 mx-auto;
+}
+
+/* Tooltip */
+.tooltip {
+  @apply relative inline-block;
+}
+
+.tooltip-text {
+  @apply invisible absolute z-10 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 w-max;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip:hover .tooltip-text {
+  @apply visible opacity-100;
+}
+
+/* Estilos para la página de inicio */
+.hero-section {
+  @apply relative overflow-hidden bg-gradient-to-r from-indigo-600 to-indigo-800 text-white py-16;
+}
+
+.category-button {
+  @apply px-4 py-2 bg-white text-indigo-600 rounded-lg shadow-md hover:bg-indigo-50 transition-all duration-200 font-medium;
+}
+
+.event-card {
+  @apply bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+}
+
+.event-card-img {
+  @apply w-full h-48 object-cover transition-all duration-300 hover:scale-105;
+}
+
+.event-card-body {
+  @apply p-4;
+}
+
+.event-card-title {
+  @apply text-lg font-semibold text-gray-800 mb-2;
+}
+
+.event-card-price {
+  @apply text-indigo-600 font-bold;
+}
+
+/* Footer */
+.footer {
+  @apply bg-gray-800 text-white py-8;
+}
+
+.footer-title {
+  @apply text-lg font-semibold mb-4;
+}
+
+.footer-link {
+  @apply text-gray-300 hover:text-white transition-colors duration-200;
+}

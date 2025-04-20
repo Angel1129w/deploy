@@ -1,0 +1,16 @@
+[build]
+builder = "nixpacks"
+buildCommand = "cd backend && go build -o main . && cd .. && npm install && npm run build"
+
+[deploy]
+startCommand = "./backend/main"
+restartPolicyType = "ON_FAILURE"
+healthcheckPath = "/registro"
+healthcheckTimeout = 300
+
+[env]
+PORT = "8080"
+NODE_ENV = "production"
+REACT_APP_API_URL = "${RAILWAY_STATIC_URL}"
+MONGO_URI = "${MONGO_URI}"
+GIN_MODE = "release"
