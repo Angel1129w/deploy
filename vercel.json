@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/register.go",
+      "src": "backend/api/register.go",
       "use": "@vercel/go"
     },
     {
@@ -17,7 +17,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/register.go",
+      "dest": "backend/api/register.go",
       "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       "headers": {
         "Access-Control-Allow-Origin": "*",
