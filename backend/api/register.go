@@ -53,7 +53,6 @@ func init() {
 	}
 }
 
-// Handler es la función principal que maneja todas las solicitudes HTTP
 func Handler(w http.ResponseWriter, r *http.Request) {
 	// Configurar CORS
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -66,8 +65,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Obtener la colección de usuarios
+	// Obtener las colecciones necesarias
 	collection := client.Database("qrtixpro").Collection("usuarios")
+	logsCollection := client.Database("qrtixpro").Collection("logs")
 
 	// Manejar diferentes rutas
 	switch r.URL.Path {
@@ -98,21 +98,75 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		responseWithJSON(w, http.StatusOK, Response{
-			Status:  "success",
-			Mensaje: "Usuario registrado con éxito",
+		responseWithJSON(w, http.StatusCreated, Response{Status: "success", Mensaje: "Usuario registrado exitosamente"})
+
+	case "/api/login":
+		if r.Method != http.MethodPost {
+			http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+			return
+		}
+
+		var credenciales struct {
+			Cedula     string `json:"cedula"`
+			Contrasena string `json:"contrasena"`
+		}
+
+		if err := json.NewDecoder(r.Body).Decode(&credenciales); err != nil {
+			responseWithError(w, http.StatusBadRequest, "Datos inválidos")
+			return
+		}
+
+		var usuario Usuario
+		err := collection.FindOne(context.Background(), bson.M{
+			"cedula":     credenciales.Cedula,
+			"contrasena": credenciales.Contrasena,
+		}).Decode(&usuario)
+
+		if err != nil {
+			responseWithError(w, http.StatusUnauthorized, "Credenciales inválidas")
+			return
+		}
+
+		// Registrar el inicio de sesión en los logs
+		_, err = logsCollection.InsertOne(context.Background(), bson.M{
+			"cedula":    usuario.Cedula,
+			"accion":    "login",
+			"timestamp": time.Now(),
 		})
+
+		responseWithJSON(w, http.StatusOK, Response{Status: "success", Mensaje: "Login exitoso", Data: usuario})
+
+	case "/api/obtener-usuario":
+		if r.Method != http.MethodPost {
+			http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+			return
+		}
+
+		var request struct {
+			Cedula string `json:"cedula"`
+		}
+
+		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+			responseWithError(w, http.StatusBadRequest, "Datos inválidos")
+			return
+		}
+
+		var usuario Usuario
+		err := collection.FindOne(context.Background(), bson.M{"cedula": request.Cedula}).Decode(&usuario)
+		if err != nil {
+			responseWithError(w, http.StatusNotFound, "Usuario no encontrado")
+			return
+		}
+
+		responseWithJSON(w, http.StatusOK, Response{Status: "success", Data: usuario})
 
 	default:
 		http.Error(w, "Ruta no encontrada", http.StatusNotFound)
 	}
 }
 
-func responseWithError(w http.ResponseWriter, code int, message string) {
-	responseWithJSON(w, code, Response{
-		Status:  "error",
-		Mensaje: message,
-	})
+func responseWithError(w http.ResponseWriter, code int, mensaje string) {
+	responseWithJSON(w, code, Response{Status: "error", Mensaje: mensaje})
 }
 
 func responseWithJSON(w http.ResponseWriter, code int, payload interface{}) {
