@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "cd backend && go build -o main . && cd .. && npm install && npm run build"
+buildCommand = "cd backend && go mod tidy && go build -o main . && cd .. && npm ci && npm run build"
 
 [deploy]
 startCommand = "./backend/main"
