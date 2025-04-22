@@ -89,9 +89,12 @@ func main() {
 	r.POST("/verificar-rostro", verificarRostro)
 	r.PUT("/actualizar-ultima-sesion", actualizarUltimaSesion)
 
-	port := ":8080"
-	fmt.Println("🚀 Servidor corriendo en http://localhost" + port)
-	r.Run(port)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	fmt.Printf("🚀 Servidor corriendo en el puerto %s\n", port)
+	r.Run(":" + port)
 }
 
 func registrarUsuario(c *gin.Context) {
