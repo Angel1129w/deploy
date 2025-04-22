@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -72,3 +73,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 =======
 # qrtixpro
 >>>>>>> 6bc1c0d08900b672d7c9422e6ce0dd68af5ea719
+=======
+# prueba12
+>>>>>>> c5b91b9b37f8d53fcfec5eaf9c2068b61592cfd2
